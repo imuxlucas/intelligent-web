@@ -1,7 +1,6 @@
 import type { Config } from "tailwindcss";
 
 export default {
-  darkMode: ["class"],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -11,51 +10,137 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+        bg: {
+          primary: "rgba(255, 255, 255, 1)",
+          secondary: "rgba(0, 0, 0, 0.04)",
+          light: "rgba(245, 245, 245, 1)",
         },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+        fg: {
+          opposite: "rgba(255, 255, 255, 1)",
+          primary: "rgba(0, 0, 0, 1)",
+          secondary: "rgba(0, 0, 0, 0.8)",
+          tertiary: "rgba(0, 0, 0, 0.6)",
+          disabled: "rgba(0, 0, 0, 0.4)",
         },
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+        error: {
+          default: "rgba(240, 80, 80, 1)",
+          hover: "rgba(224, 72, 72, 1)",
+          active: "rgba(208, 64, 64, 1)",
         },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+        fill: {
+          default: "rgba(0, 0, 0, 0.04)",
+          hover: "rgba(0, 0, 0, 0.08)",
+          active: "rgba(0, 0, 0, 0.12)",
+          disabled: "rgba(0, 0, 0, 0.02)",
+          focus: "rgba(0, 0, 0, 0.08)",
         },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+        ghost: {
+          hover: "rgba(0, 0, 0, 0.04)",
+          active: "rgba(0, 0, 0, 0.08)",
         },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+        mask: {
+          black: "rgba(0, 0, 0, 0.8)",
+          neutral: "rgba(245, 245, 245, 0.8)",
         },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        chart: {
-          "1": "hsl(var(--chart-1))",
-          "2": "hsl(var(--chart-2))",
-          "3": "hsl(var(--chart-3))",
-          "4": "hsl(var(--chart-4))",
-          "5": "hsl(var(--chart-5))",
-        },
+        line: {
+          default: "rgba(0, 0, 0, 0.06)",
+        }
+      },
+      opacity: {
+        100: '1',
+        70: '0.7',
+      },
+      blur: {
+        8: '8px',
+      },
+      boxShadow: {
+        default: 'inset 0 0 0 1px rgba(0, 0, 0, 0.06)',
+        focus: 'inset 0 0 0 1px rgba(0, 0, 0, 1)',
+      },
+      zIndex: {
+        40: '40',
+        50: '50',
+      },
+      spacing: {
+        0: '0',
+        8: '8px',
+        10: '10px',
+        12: '12px',
+        14: '14px',
+        16: '16px',
+        24: '24px',
+      },
+      size: {
+        16: '16px',
+        24: '24px',
+        36: '36px',
+      },
+      height: {
+        24: '24px',
+        30: '30px',
+        36: '36px',
+        68: '68px',
+        100: '100px',
+        126: '126px',
+      },
+      width: {
+        400: '400px',
+        600: '600px',
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        8: "8px",
+        6: "6px",
+        4: "4px",
+      },
+      margin: {
+        3.5: '3.5px',
+        4: '4px',
+        8: '8px',
+        16: '16px',
+        24: '24px',
+        106: '106px',
+      },
+      padding: {
+        2: '2px',
+        4: '4px',
+        5: '5px',
+        7: '7px',
+        8: '8px',
+        10: '10px',
+        12: '12px',
+        16: '16px',
+        20: '20px',
+        23: '23px',
+        24: '24px',
+        32: '32px',
+      },
+      gap: {
+        2: '2px',
+        4: '4px',
+        6: '6px',
+        8: '8px',
+        12: '12px',
+        16: '16px',
+        20: '20px',
+        24: '24px',
+      },
+      fontFamily: {
+        'diy': ['Michroma', 'sans-serif'],
+        'sans': ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'],
+      },
+      fontSize: {
+        30: ['30px', '38px'],
+        24: ['24px', '32px'],
+        16: ['16px', '24px'],
+        14: ['14px', '22px'],
+        12: ['12px', '20px'],
+      },
+      letterSpacing: {
+        2: '2px',
+      },
+      fontWeight: {
+        500: '500',
+        400: '400',
       },
     },
   },
