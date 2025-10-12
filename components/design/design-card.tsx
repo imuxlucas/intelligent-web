@@ -19,26 +19,25 @@ export const DesignCard = memo(({ design }: DesignCardProps) => {
         style={{ boxShadow: 'inset 0 0 0 1px rgba(0, 0, 0, 0.06)' }}
       />
       <div className="relative overflow-hidden">
-        {/* 错误占位符 */}
-        {imageError && (
-          <div className="w-full aspect-[8/5] bg-bg-secondary flex items-center justify-center">
+        {/* 固定尺寸容器，防止布局偏移 */}
+        <div className="w-full aspect-[8/5] bg-bg-secondary flex items-center justify-center relative">
+          {imageError ? (
             <div className="text-fg-tertiary text-12">图片加载失败</div>
-          </div>
-        )}
-
-        {/* 实际图片 */}
-        {!imageError && (
-          <Image
-            src={design.media}
-            alt={design.name}
-            width={400}
-            height={250}
-            className="w-full aspect-[8/5] object-contain"
-            loading="lazy"
-            onError={() => setImageError(true)}
-            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
-          />
-        )}
+          ) : (
+            <Image
+              src={design.media}
+              alt={design.name}
+              width={400}
+              height={250}
+              className="w-full h-full object-contain"
+              loading="lazy"
+              onError={() => setImageError(true)}
+              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
+              placeholder="blur"
+              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+            />
+          )}
+        </div>
       </div>
       <CardContent className="p-20 pb-16 space-y-8">
         <div className="flex flex-wrap gap-4">

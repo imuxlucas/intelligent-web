@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, Suspense } from 'react';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { DesignGrid } from '@/components/design/design-grid';
@@ -24,41 +24,51 @@ export default function Home() {
     [designs, searchFilters.searchTerm, searchFilters.selectedTags]
   );
 
-  const handlers = useMemo(() => ({
-    searchChange: (searchTerm: string) =>
-      setSearchFilters(prev => ({ ...prev, searchTerm })),
-    tagToggle: (tag: string) =>
-      setSearchFilters(prev => ({
-        ...prev,
-        selectedTags: tag === '' ? [] :
-          prev.selectedTags.includes(tag)
-            ? prev.selectedTags.filter(t => t !== tag)
-            : [...prev.selectedTags, tag]
-      })),
-    addDesign: (newDesign: Design) => addDesign(newDesign),
-    logout: async () => {
-      try { await logout(); }
-      catch (error) { alert('注销失败，请重试'); }
+  const searchChange = useCallback((searchTerm: string) => {
+    setSearchFilters(prev => ({ ...prev, searchTerm }));
+  }, []);
+
+  const tagToggle = useCallback((tag: string) => {
+    setSearchFilters(prev => ({
+      ...prev,
+      selectedTags: tag === '' ? [] :
+        prev.selectedTags.includes(tag)
+          ? prev.selectedTags.filter(t => t !== tag)
+          : [...prev.selectedTags, tag]
+    }));
+  }, []);
+
+  const handleAddDesign = useCallback((newDesign: Design) => {
+    addDesign(newDesign);
+  }, [addDesign]);
+
+  const handleLogout = useCallback(async () => {
+    try {
+      await logout();
+    } catch (error) {
+      alert('注销失败，请重试');
     }
-  }), [addDesign, logout]);
+  }, [logout]);
 
   return (
     <div className="min-h-screen bg-bg-primary">
       <Header
         authState={{ isLoggedIn, userName, userEmail }}
         searchFilters={searchFilters}
-        onSearchChange={handlers.searchChange}
-        onTagToggle={handlers.tagToggle}
-        onAddDesign={handlers.addDesign}
-        onLogout={handlers.logout}
+        onSearchChange={searchChange}
+        onTagToggle={tagToggle}
+        onAddDesign={handleAddDesign}
+        onLogout={handleLogout}
         allTags={allTags}
       />
       <main className="px-24">
-        {isLoading ? (
-          <DesignGridSkeleton />
-        ) : (
-          <DesignGrid designs={filteredDesigns} />
-        )}
+        <Suspense fallback={<DesignGridSkeleton />}>
+          {isLoading ? (
+            <DesignGridSkeleton />
+          ) : (
+            <DesignGrid designs={filteredDesigns} />
+          )}
+        </Suspense>
       </main>
       <Footer />
     </div>
