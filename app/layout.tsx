@@ -21,15 +21,7 @@ export default function RootLayout({
         <link
           href="https://fonts.googleapis.com/css2?family=Michroma:wght@400&display=swap"
           rel="stylesheet"
-          media="print"
-          onLoad={(e) => {
-            const target = e.target as HTMLLinkElement;
-            target.media = 'all';
-          }}
         />
-        <noscript>
-          <link href="https://fonts.googleapis.com/css2?family=Michroma:wght@400&display=swap" rel="stylesheet" />
-        </noscript>
       </head>
       <body>
         {children}

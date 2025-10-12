@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 字体显示优化 */
+@font-face {
+  font-family: 'Michroma';
+  font-display: swap;
+}
+
 body {
   @apply bg-bg-primary text-fg-primary text-14 font-400 font-sans;
   -webkit-font-smoothing: antialiased;

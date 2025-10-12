@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { generateUniqueFileName } from '@/lib/utils/design-utils';
 import { uploadDesign, uploadFile, getFileUrl } from '@/lib/supabase';
+import Image from 'next/image';
 import type { Design, UploadFormData } from '@/lib/types';
 
 interface UploadDialogProps {
@@ -144,9 +145,11 @@ export const UploadDialog = ({ onAddDesign, currentUser }: UploadDialogProps) =>
               {formData.files.map((file, index) => (
                 <div key={index} className="relative w-full h-126 bg-bg-secondary rounded-8 flex items-center justify-center">
                   {file.type.startsWith('image/') ? (
-                    <img
+                    <Image
                       src={URL.createObjectURL(file)}
                       alt={file.name}
+                      width={400}
+                      height={126}
                       className="w-full h-full object-contain rounded-8"
                     />
                   ) : (
