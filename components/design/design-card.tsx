@@ -2,6 +2,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { formatDate } from '@/lib/utils/date-utils';
 import { useState, memo } from 'react';
+import Image from 'next/image';
 import type { Design } from '@/lib/types';
 
 interface DesignCardProps {
@@ -27,12 +28,15 @@ export const DesignCard = memo(({ design }: DesignCardProps) => {
 
         {/* 实际图片 */}
         {!imageError && (
-          <img
+          <Image
             src={design.media}
             alt={design.name}
+            width={400}
+            height={250}
             className="w-full aspect-[8/5] object-contain"
             loading="lazy"
             onError={() => setImageError(true)}
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
           />
         )}
       </div>

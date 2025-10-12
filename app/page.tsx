@@ -4,6 +4,7 @@ import { useState, useMemo, useCallback } from 'react';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { DesignGrid } from '@/components/design/design-grid';
+import { DesignGridSkeleton } from '@/components/design/design-grid-skeleton';
 import { useAuth } from '@/lib/hooks/use-auth';
 import { useDesigns } from '@/lib/hooks/use-designs';
 import { filterDesigns, getAllTags } from '@/lib/utils/design-utils';
@@ -11,7 +12,7 @@ import type { Design, SearchFilters } from '@/lib/types';
 
 export default function Home() {
   const { isLoggedIn, userName, userEmail, logout } = useAuth();
-  const { designs, addDesign } = useDesigns();
+  const { designs, addDesign, isLoading } = useDesigns();
   const [searchFilters, setSearchFilters] = useState<SearchFilters>({
     searchTerm: '',
     selectedTags: []
@@ -53,7 +54,11 @@ export default function Home() {
         allTags={allTags}
       />
       <main className="px-24">
-        <DesignGrid designs={filteredDesigns} />
+        {isLoading ? (
+          <DesignGridSkeleton />
+        ) : (
+          <DesignGrid designs={filteredDesigns} />
+        )}
       </main>
       <Footer />
     </div>
