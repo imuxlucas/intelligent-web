@@ -112,7 +112,7 @@ export const UploadDialog = ({ onAddDesign, currentUser }: UploadDialogProps) =>
         </Button>
       </DialogTrigger>
       <DialogContent
-        size="large"
+        size="md"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         <DialogHeader>

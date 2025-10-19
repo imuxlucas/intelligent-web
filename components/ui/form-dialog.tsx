@@ -13,7 +13,7 @@ export const FormDialog = ({ trigger, title, isOpen, onOpenChange, children }: F
     <DialogTrigger asChild>
       {trigger}
     </DialogTrigger>
-    <DialogContent className="sm:max-w-md">
+    <DialogContent className="sm">
       <DialogHeader>
         <DialogTitle>{title}</DialogTitle>
       </DialogHeader>

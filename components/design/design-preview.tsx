@@ -1,0 +1,61 @@
+"use client"
+
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Badge } from '@/components/ui/badge';
+import { useState } from 'react';
+import Image from 'next/image';
+import type { Design } from '@/lib/types';
+
+interface DesignPreviewProps {
+  design: Design;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export const DesignPreview = ({ design, isOpen, onClose }: DesignPreviewProps) => {
+  const [imageError, setImageError] = useState(false);
+
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent
+        size="lg"
+      >
+        <DialogHeader className="space-y-8 mb-12">
+          {/* 第一行：标签区域 */}
+          <div className="flex flex-wrap gap-4 items-center">
+            {design.tag.split(',').map(tag => (
+              <Badge key={tag.trim()} variant="display">
+                {tag.trim()}
+              </Badge>
+            ))}
+          </div>
+
+          {/* 第二行：标题和描述 */}
+          <DialogTitle className="line-clamp-2 !text-14">
+            {design.name}<span className="font-normal">: {design.introduction}</span>
+          </DialogTitle>
+        </DialogHeader>
+
+        {/* 第三行：设计案例展示区域 (8:5 比例) */}
+        <div className="w-full aspect-[8/5] bg-bg-secondary rounded-4 overflow-hidden flex items-center justify-center">
+          {imageError ? (
+            <div className="text-fg-tertiary">图片加载失败</div>
+          ) : (
+            <Image
+              src={design.media}
+              alt={design.name}
+              width={800}
+              height={500}
+              className="w-full h-full object-contain"
+              loading="lazy"
+              onError={() => setImageError(true)}
+              sizes="(max-width: 768px) 100vw, 80vw"
+              placeholder="blur"
+              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+            />
+          )}
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};

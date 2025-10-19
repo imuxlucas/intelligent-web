@@ -25,16 +25,17 @@ const DialogOverlay = React.forwardRef<
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 
 const dialogContentVariants = cva(
-  "fixed left-[50%] top-[50%] z-50 translate-x-[-50%] translate-y-[-50%] bg-bg-primary p-24 rounded-8",
+  "fixed left-24 right-24 top-[50%] z-50 translate-y-[-50%] bg-bg-primary p-24 rounded-8",
   {
     variants: {
       size: {
-        default: "w-400",
-        large: "w-600",
+        sm: "max-w-[400px] mx-auto",
+        md: "max-w-[600px] mx-auto",
+        lg: "max-w-[800px] mx-auto",
       },
     },
     defaultVariants: {
-      size: "default",
+      size: "sm",
     },
   }
 )
@@ -56,7 +57,7 @@ const DialogContent = React.forwardRef<
     >
       {children}
       <DialogClose asChild>
-        <Button variant="icon" className="absolute top-14 right-14">
+        <Button variant="icon" className="absolute top-14 right-14 focus-visible:outline-none">
           <XIcon iconType="tertiary" />
         </Button>
       </DialogClose>
