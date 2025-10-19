@@ -37,7 +37,7 @@ export const DesignPreview = ({ design, isOpen, onClose }: DesignPreviewProps) =
         </DialogHeader>
 
         {/* 第三行：设计案例展示区域 (8:5 比例) */}
-        <div className="w-full aspect-[8/5] bg-bg-secondary rounded-4 overflow-hidden flex items-center justify-center">
+        <div className="w-full aspect-[8/5] bg-bg-secondary rounded-4 overflow-hidden flex items-center justify-center relative">
           {imageError ? (
             <div className="text-fg-tertiary">图片加载失败</div>
           ) : (
@@ -54,6 +54,10 @@ export const DesignPreview = ({ design, isOpen, onClose }: DesignPreviewProps) =
               blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
             />
           )}
+          {/* 内阴影覆盖层 */}
+          <div
+            className="absolute inset-0 pointer-events-none rounded-4 shadow-default"
+          />
         </div>
       </DialogContent>
     </Dialog>
