@@ -14,6 +14,7 @@ interface DesignPreviewProps {
 
 export const DesignPreview = ({ design, isOpen, onClose }: DesignPreviewProps) => {
   const [imageError, setImageError] = useState(false);
+  const isGif = design.media.toLowerCase().endsWith('.gif');
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -47,11 +48,12 @@ export const DesignPreview = ({ design, isOpen, onClose }: DesignPreviewProps) =
               width={800}
               height={500}
               className="w-full h-full object-contain"
-              loading="lazy"
+              loading={isGif ? "lazy" : "eager"}
               onError={() => setImageError(true)}
               sizes="(max-width: 768px) 100vw, 80vw"
               placeholder="blur"
               blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+              unoptimized={isGif}
             />
           )}
           {/* 内阴影覆盖层 */}
