@@ -14,6 +14,7 @@ export const DesignCard = memo(({ design }: DesignCardProps) => {
   const [imageError, setImageError] = useState(false);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const isGif = design.media.toLowerCase().endsWith('.gif');
+  const isVideo = design.media.toLowerCase().endsWith('.mp4');
 
   const handleImageClick = () => {
     setIsPreviewOpen(true);
@@ -37,7 +38,18 @@ export const DesignCard = memo(({ design }: DesignCardProps) => {
             onClick={handleImageClick}
           >
             {imageError ? (
-              <div className="text-fg-tertiary text-12">图片加载失败</div>
+              <div className="text-fg-tertiary text-12">媒体加载失败</div>
+            ) : isVideo ? (
+              <video
+                src={design.media}
+                className="w-full h-full object-contain"
+                muted
+                loop
+                autoPlay
+                playsInline
+                preload="metadata"
+                onError={() => setImageError(true)}
+              />
             ) : (
               <Image
                 src={design.media}
