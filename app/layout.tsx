@@ -3,9 +3,9 @@ import type { Metadata } from 'next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
-  title: 'Intelligent Web - Web AI设计灵感平台',
-  description: '发现优秀的Web设计案例，汇聚全球最佳设计灵感，为您的创作提供无限可能',
-  keywords: 'Web设计, UI设计, 设计灵感, 创意平台, 前端设计',
+  title: '品质 AI - AI 设计灵感平台',
+  description: '发现优秀的 Web 与移动端设计案例，汇聚全球最佳设计灵感，为您的创作提供无限可能',
+  keywords: 'Web设计,  APP 设计, UX设计, 设计灵感, 创意平台, 前端设计',
 };
 
 export default function RootLayout({

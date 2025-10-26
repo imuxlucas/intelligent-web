@@ -42,7 +42,7 @@ export const Header = ({
       {/* 导航栏 */}
       <nav className="bg-bg-primary sticky top-0 z-50">
         <div className="flex items-center h-68 gap-12 px-24">
-          <h2 className="font-diy">INTELLIGENT WEB</h2>
+          <h2 className="tracking-[0.08em]">品质 AI</h2>
 
           {/* 桌面搜索框 */}
           <div className="relative w-full hidden md:flex flex-1 min-w-0">
@@ -133,7 +133,7 @@ export const Header = ({
       {/* 标题和标签筛选区域 */}
       <div className="px-24 py-32">
         <div className="text-center">
-          <h1>👽 不一样的 WEB 体验</h1>
+          <h1>🔵 塑造 AI 品质体验</h1>
 
           {/* 标签筛选 */}
           <div className="flex flex-wrap gap-6 justify-center">
