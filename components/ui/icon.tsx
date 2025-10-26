@@ -60,3 +60,7 @@ export const UploadIcon = (props: Omit<IconProps, 'icon'>) => (
 export const TrashIcon = (props: Omit<IconProps, 'icon'>) => (
   <Icon icon={require('lucide-react').Trash} {...props} />
 );
+
+export const StarIcon = (props: Omit<IconProps, 'icon'>) => (
+  <Icon icon={require('lucide-react').Star} {...props} />
+);
