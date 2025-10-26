@@ -7,7 +7,7 @@ export interface Design {
   introduction: string;
   tag: string;
   media: string;
-  thinking: string;
+  thinking?: string;
 }
 
 export interface User {
