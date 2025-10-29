@@ -64,3 +64,11 @@ export const TrashIcon = (props: Omit<IconProps, 'icon'>) => (
 export const StarIcon = (props: Omit<IconProps, 'icon'>) => (
   <Icon icon={require('lucide-react').Star} {...props} />
 );
+
+export const ArrowLeftIcon = (props: Omit<IconProps, 'icon'>) => (
+  <Icon icon={require('lucide-react').ArrowLeft} {...props} />
+);
+
+export const ArrowUpIcon = (props: Omit<IconProps, 'icon'>) => (
+  <Icon icon={require('lucide-react').ArrowUp} {...props} />
+);

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { SearchIcon, MenuIcon, XIcon } from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -34,8 +35,10 @@ export const Header = ({
   onLogout,
   allTags
 }: HeaderProps) => {
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [isSearchHovered, setIsSearchHovered] = useState(false);
 
   return (
     <>
@@ -45,7 +48,11 @@ export const Header = ({
           <h2 className="tracking-[0.08em]">AI 品质体验</h2>
 
           {/* 桌面搜索框 */}
-          <div className="relative w-full hidden md:flex flex-1 min-w-0">
+          <div
+            className="relative w-full hidden md:flex flex-1 min-w-0"
+            onMouseEnter={() => setIsSearchHovered(true)}
+            onMouseLeave={() => setIsSearchHovered(false)}
+          >
             <SearchIcon iconType="tertiary" className="absolute left-12 top-10" />
             <Input
               variant="desktopSearch"
@@ -54,7 +61,23 @@ export const Header = ({
               onChange={(e) => onSearchChange(e.target.value)}
               onFocus={() => setIsSearchFocused(true)}
               onBlur={() => setIsSearchFocused(false)}
+              className={isSearchHovered ? 'bg-ghost-hover' : ''}
             />
+            {/* AI 搜索按钮 - 仅在hover时显示 */}
+            {isSearchHovered && (
+              <div
+                className="absolute right-12 top-[7px] flex items-center text-14"
+                style={{
+                  color: '#4150F7',
+                  cursor: 'pointer'
+                }}
+                onClick={() => {
+                  router.push('/ai-search');
+                }}
+              >
+                ☆ AI 搜索
+              </div>
+            )}
           </div>
 
           {/* 桌面导航 */}

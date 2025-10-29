@@ -26,3 +26,17 @@ h2 {
 h3 {
   @apply text-14 font-500 mb-8;
 }
+
+/* contentEditable placeholder */
+[contenteditable]:empty:before {
+  content: attr(data-placeholder);
+  color: rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+
+[contenteditable]:focus:empty:before {
+  color: rgba(0, 0, 0, 0.4);
+}

@@ -8,6 +8,66 @@ interface DeepSeekResponse {
   }>;
 }
 
+export async function searchDesignWithAI(query: string): Promise<string> {
+  const prompt = `你是一位资深的设计顾问和思考者，用户正在寻找设计灵感。请根据用户的搜索需求，进行深度思考并提供全面的设计指导。
+
+用户搜索：${query}
+
+请按照以下结构进行深度思考和回答：
+
+**🤔 深度思考过程**
+首先分析用户需求的核心要素，思考设计背后的用户心理、使用场景和商业目标。
+
+**💡 设计洞察**
+基于你的专业经验，提供独特的设计洞察和创意方向。
+
+**🎨 具体建议**
+提供可操作的设计建议，包括：
+- 视觉风格和色彩方案
+- 布局和交互设计
+- 用户体验优化
+- 技术实现要点
+
+**📚 灵感来源**
+推荐相关的设计案例和灵感来源，并解释为什么这些案例值得参考。
+
+**🚀 实施路径**
+提供具体的实施建议和注意事项。
+
+请用专业而富有洞察力的语言，以整段文字的形式回答，控制在500字以内，让用户感受到你的深度思考过程。`;
+
+  try {
+    const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer sk-b43b5b251b614a1e81a87fe081ca9a1a`,
+      },
+      body: JSON.stringify({
+        model: 'deepseek-chat',
+        messages: [
+          {
+            role: 'user',
+            content: prompt,
+          },
+        ],
+        max_tokens: 500,
+        temperature: 0.7,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`API请求失败: ${response.status}`);
+    }
+
+    const data: DeepSeekResponse = await response.json();
+    return data.choices[0]?.message?.content || '搜索服务暂时不可用，请稍后重试';
+  } catch (error) {
+    console.error('DeepSeek API 错误:', error);
+    throw new Error('AI搜索服务暂时不可用，请稍后重试');
+  }
+}
+
 export async function analyzeDesignWithAI(designData: {
   id: string;
   name: string;
