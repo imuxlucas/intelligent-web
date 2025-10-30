@@ -8,33 +8,65 @@ interface DeepSeekResponse {
   }>;
 }
 
-export async function searchDesignWithAI(query: string): Promise<string> {
-  const prompt = `你是一位资深的设计顾问和思考者，用户正在寻找设计灵感。请根据用户的搜索需求，进行深度思考并提供全面的设计指导。
+export async function searchDesignWithAI(query: string, designs: Array<{ id: string; name: string; introduction: string; tag: string; media: string }>): Promise<string> {
+  // 构建所有设计案例的信息，包括媒体文件URL
+  const designCases = designs.map(design => ({
+    id: design.id,
+    name: design.name,
+    introduction: design.introduction,
+    tag: design.tag,
+    mediaUrl: design.media, // 图片/视频/动图的URL
+    mediaType: design.media.toLowerCase().endsWith('.mp4') ? '视频' :
+      design.media.toLowerCase().endsWith('.gif') ? '动图' : '图片'
+  }));
 
-用户搜索：${query}
+  // 添加用户问题和设计案例信息
+  let caseDescription = '';
+  caseDescription += `用户搜索问题：${query}\n\n`;
+  caseDescription += `我已经收集了${designCases.length}个设计案例，包括：\n`;
 
-请按照以下结构进行深度思考和回答：
+  designCases.forEach((design, index) => {
+    caseDescription += `\n案例 ${index + 1}：\n`;
+    caseDescription += `- 名称：${design.name}\n`;
+    caseDescription += `- 描述：${design.introduction}\n`;
+    caseDescription += `- 标签：${design.tag}\n`;
+    caseDescription += `- 媒体类型：${design.mediaType}\n`;
+    caseDescription += `- 媒体链接：${design.mediaUrl}\n`;
+  });
 
-**🤔 深度思考过程**
-首先分析用户需求的核心要素，思考设计背后的用户心理、使用场景和商业目标。
+  // 构建提示词
+  const prompt = `你是一位富有创造力和洞察力的设计顾问Lugent。用户正在搜索设计灵感，我已经为你提供了所有现有的设计案例。
 
-**💡 设计洞察**
-基于你的专业经验，提供独特的设计洞察和创意方向。
+${caseDescription}
 
-**🎨 具体建议**
-提供可操作的设计建议，包括：
-- 视觉风格和色彩方案
-- 布局和交互设计
-- 用户体验优化
-- 技术实现要点
+**请基于这些实际的设计案例来回答用户的问题：**
 
-**📚 灵感来源**
-推荐相关的设计案例和灵感来源，并解释为什么这些案例值得参考。
+1. 仔细观察所有设计案例，分析它们的共同特点和差异
+2. 根据用户的问题，从这些实际案例中找到相关的设计元素、风格、方法
+3. 结合具体案例来解释和说明你的建议
+4. 可以引用具体案例来支撑你的观点
+5. 在回答中可以提到哪些案例最符合用户的需求，并解释原因
 
-**🚀 实施路径**
-提供具体的实施建议和注意事项。
+**重要要求：**
+1. 必须基于实际提供的设计案例来回答，不要泛泛而谈
+2. 可以具体提到案例的名称和特点
+3. 语言要自然流畅，像在和用户对话
+4. 深度思考要展现出你对这些设计案例的分析和理解
+5. 回答要控制在600字以内，内容丰富且有价值
+6. 如果用户的问题与某些案例高度相关，一定要重点提及
 
-请用专业而富有洞察力的语言，以整段文字的形式回答，控制在500字以内，让用户感受到你的深度思考过程。`;
+现在请基于这些设计案例，深度思考并回答用户的问题：${query}`;
+
+  // 构建消息数组，如果支持图片输入，可以将图片URL添加到消息中
+  const messages = [
+    {
+      role: 'user' as const,
+      content: prompt
+    }
+  ];
+
+  // 如果DeepSeek支持图片输入，可以添加图片URL
+  // 注意：这里先使用文本描述，如果API支持图片，可以添加图片内容
 
   try {
     const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
@@ -45,14 +77,9 @@ export async function searchDesignWithAI(query: string): Promise<string> {
       },
       body: JSON.stringify({
         model: 'deepseek-chat',
-        messages: [
-          {
-            role: 'user',
-            content: prompt,
-          },
-        ],
-        max_tokens: 500,
-        temperature: 0.7,
+        messages: messages,
+        max_tokens: 800,
+        temperature: 0.9,
       }),
     });
 

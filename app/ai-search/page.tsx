@@ -6,9 +6,11 @@ import { ArrowLeftIcon, ArrowUpIcon } from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { searchDesignWithAI } from '@/lib/services/deepseek';
+import { useDesigns } from '@/lib/hooks/use-designs';
 
 export default function AISearchPage() {
   const router = useRouter();
+  const { designs, isLoading: designsLoading } = useDesigns();
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [searchResult, setSearchResult] = useState('');
@@ -39,8 +41,17 @@ export default function AISearchPage() {
       setHasSearched(true);
 
       try {
-        // 调用真实的DeepSeek API
-        const aiResponse = await searchDesignWithAI(searchQuery);
+        // 准备设计案例数据，只传递需要的字段
+        const designData = designs.map(design => ({
+          id: design.id,
+          name: design.name,
+          introduction: design.introduction,
+          tag: design.tag,
+          media: design.media
+        }));
+
+        // 调用真实的DeepSeek API，传递所有设计案例
+        const aiResponse = await searchDesignWithAI(searchQuery, designData);
 
         // 保存完整结果并开始打字机效果
         setSearchResult(aiResponse);
@@ -123,7 +134,7 @@ export default function AISearchPage() {
               <div className="max-w-800 mx-auto">
                 {isSearching ? (
                   <div className="text-center py-32">
-                    <div className="animate-spin w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full mx-auto mb-16"></div>
+                    <div className="animate-spin w-24 h-24 border-2 border-blue-500 border-t-transparent rounded-full mx-auto mb-16"></div>
                     <p className="text-fg-secondary">AI 正在深度思考中...</p>
                   </div>
                 ) : (
